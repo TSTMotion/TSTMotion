@@ -1,6 +1,19 @@
 # TSTMotion: Training-free Scene-aware Text-to-motion Generation
 
-This is the repository that contains code for the [TSTMotion website](https://TSTMotion.github.io/TSTMotion.github.io/). The code is being cleaned and will be released soon.
+<p align="left">
+<!--     <a href='https://arxiv.org/abs/2210.09729'>
+      <img src='https://img.shields.io/badge/Paper-arXiv-green?style=plastic&logo=arXiv&logoColor=green' alt='Paper arXiv'>
+    </a>
+    <a href='https://silvester.wang/HUMANISE/paper.pdf'>
+      <img src='https://img.shields.io/badge/Paper-PDF-red?style=plastic&logo=adobeacrobatreader&logoColor=red' alt='Paper PDF'>
+    </a> -->
+    <a href='https://TSTMotion.github.io/TSTMotion.github.io/'>
+      <img src='https://img.shields.io/badge/Project-Page-blue?style=plastic&logo=Google%20chrome&logoColor=blue' alt='Project Page'>
+    </a>
+</p>
+
+
+This repository is an official implementation of [TSTMotion](https://TSTMotion.github.io/TSTMotion.github.io/). The code is being cleaned and will be released soon.
 
 If you find TSTMotion useful for your work please cite:
 ```
