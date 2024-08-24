@@ -12,9 +12,17 @@
     </a>
 </p>
 
-
 This repository is an official implementation of [TSTMotion](https://TSTMotion.github.io/TSTMotion.github.io/). The code is being cleaned and will be released soon.
 
+
+## Environment Setup
+Our code is based on the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model), you may use the following command directly or refer to the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model) repository. Notably, openai==0.28.0.
+```
+pip install -r requirements.txt
+```
+
+
+## Citation
 If you find TSTMotion useful for your work please cite:
 ```
 @article{       ,
@@ -23,3 +31,4 @@ If you find TSTMotion useful for your work please cite:
   journal   = {},
   year      = {2024},
 }
+```
