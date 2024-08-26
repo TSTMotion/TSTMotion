@@ -24,6 +24,8 @@ This repository is an official implementation of [TSTMotion](https://TSTMotion.g
 │   │   ├── new_joints
 │   ├── prompt
 │   ├── smplx
+│   │   ├── SMPLX_NEUTRAL.npz
+│   │   ├── SMPLX_NEUTRAL.pkl
 ├── OmniControl
 │   ├── glove
 │   ├── t2m
@@ -35,7 +37,8 @@ This repository is an official implementation of [TSTMotion](https://TSTMotion.g
 ```
 
 ## Environment Setup
-Our code is based on the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model), you may use the following command directly or refer to the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model) repository.
+
+### 1. Setup Conda:
 ```
 conda env create -f environment.yml
 conda activate tstmotion
@@ -43,6 +46,30 @@ python -m spacy download en_core_web_sm
 pip install git+https://github.com/openai/CLIP.git
 ```
 
+### 2. Download Dependencies:
+The results should be placed as shown in Folder Structure, including glove,t2m and smplx.
+```
+cd OmniControl
+bash prepare/download_smpl_files.sh
+bash prepare/download_glove.sh
+bash prepare/download_t2m_evaluators.sh
+```
+
+### 3. Download Dataset:
+Follow the instructions in [HumanML3D](https://github.com/EricGuo5513/HumanML3D), then copy the results as shown in Folder Structure.
+
+### 4. Download Checkpoint:
+The results should be placed as shown in Folder Structure, including [model_humanml3d.pt](https://drive.google.com/file/d/1oTkBtArc3xjqkYD6Id7LksrTOn3e1Zud/view).
+```
+cd /OmniControl/save
+gdown --id 1oTkBtArc3xjqkYD6Id7LksrTOn3e1Zud
+unzip omnicontrol_ckpt.zip -d .
+```
+
+
+## Acknowledgements
+
+Some codes are borrowed from [MDM](https://github.com/GuyTevet/motion-diffusion-model?tab=readme-ov-file), [HUMANISE](https://github.com/Silverster98/HUMANISE), [OmniControl](https://github.com/neu-vi/OmniControl).
 
 ## Citation
 If you find TSTMotion useful for your work please cite:
