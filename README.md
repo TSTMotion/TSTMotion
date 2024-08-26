@@ -15,6 +15,25 @@
 This repository is an official implementation of [TSTMotion](https://TSTMotion.github.io/TSTMotion.github.io/). The code is being cleaned and will be released soon.
 
 
+## Folder Structure
+```
+├── datasets
+│   ├── demo_scene
+│   ├── HumanML3D
+│   │   ├── new_joint_vecs
+│   │   ├── new_joints
+│   ├── prompt
+│   ├── smplx
+├── OmniControl
+│   ├── glove
+│   ├── t2m
+│   ├── save
+│   │   ├── omnicontrol_ckpt
+│   │   │   ├── model_humanml3d.pt
+├── scripts
+├── utils
+```
+
 ## Environment Setup
 Our code is based on the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model), you may use the following command directly or refer to the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model) repository. Notably, openai==0.28.0.
 ```
