@@ -1,4 +1,4 @@
-name: mld
+name: tstmotion
 channels:
   - pytorch
   - defaults
