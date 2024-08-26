@@ -35,9 +35,12 @@ This repository is an official implementation of [TSTMotion](https://TSTMotion.g
 ```
 
 ## Environment Setup
-Our code is based on the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model), you may use the following command directly or refer to the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model) repository. Notably, openai==0.28.0.
+Our code is based on the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model), you may use the following command directly or refer to the [Motion Diffusion Model](https://github.com/GuyTevet/motion-diffusion-model) repository.
 ```
-pip install -r requirements.txt
+conda env create -f environment.yml
+conda activate tstmotion
+python -m spacy download en_core_web_sm
+pip install git+https://github.com/openai/CLIP.git
 ```
 
 
