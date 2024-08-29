@@ -76,6 +76,13 @@ You can download the [SMPLX](https://smpl-x.is.tue.mpg.de/) for visualization, i
 You can download the prepared segmentation results in folder demo_scene from [Google Drive]().
 Notably, the pointcloud of scene0604_00_vh_clean.ply must download from [ScanNet](http://www.scan-net.org/).
 
+## Motion Generation
+Notably, before the motion generation, you must input your openai's api key.
+```
+cd /scripts
+bash demo.sh
+bash visualize.sh
+```
 
 ## Acknowledgements
 
