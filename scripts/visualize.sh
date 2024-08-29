@@ -1,5 +1,5 @@
 source activate
-conda activate HUMANISE
+conda activate tstmotion
 
 cd ..
 rm -r ./visualize.log
