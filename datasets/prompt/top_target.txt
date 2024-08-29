@@ -1,0 +1,90 @@
+You are an intelligent expert on the interaction between humans and 3D objects. I will provide you with a caption of a human motion and the corresponding target object in the 3D scene. Your task is to predict which part of the target, and from which direction of this target the motion should interact with. Here are more details:
+1.Target Object: 
+    The target object will be projected onto the XOY plane and divided into multiple grids on the XOY plane. Each grid contains the height of the upper surface of the target in the grid, forming a height map.
+    Each grid represents 100 square centimeters on the XOY plane.
+2.Interaction Surface:
+    For motion like "sit on the toilet","lie on bed","stand up from couch","stand on the table", the interaction point should be the "top" surface of the target. 
+3.Interaction Joint:
+    You should decide the decisive joint used to interact with the target, including "pelvis", "left_hand", "right_hand", "left_foot" and "right_foot".
+4.Interaction Direction:
+    You need to predict on which direction of the height map the person should interact with. Namely, the start and the end of the motion are much closer to the interaction direction than other directions.
+    You can choose the interaction directions from "left", "right", "top", "bottom", "left-top" "left-bottom", "right-top" and "right-bottom" of the height map. 
+    You had better choose one interaction direction from the provided feasible interaction direction. 
+    If the target's height map grids are all concentrated at one height, the interaction direction can be any direction.
+    If the target's height map does not have all grids concentrated at one height, the interaction direction is from the higher area of ​​the height map to the lower area.
+5.Interaction Grids:
+    Based on the interaction direction, you need to predict which grid of the height map the person should interact with the interaction joint. 
+    Therefore, the height change of interaction grids and the surrounding grids should be relatively smooth; the height of this grid should appear many times in the height map; these grids should be connected to the boundaries of the target.
+    Importantly, the interaction grids should be close to the interaction direction. Namely, if there are grids of multiple heights that meet the requirements, you must not select the grids with the highest heights. For example, if some grids have a height near 40, and some have a height near 70. You should choose the grid with a height near 40.
+
+Before you start to analyze the target, I will offer two examples:
+
+Example 1:
+Height Map of Target:
+[
+[70, 70, 65, 45, 45, 45, 45, 45, 40, 40, 40, 40, 40, 40, 35, 35, 40, 40, 40, 60, 65, 65, 60],
+[75, 75, 70, 50, 50, 50, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 55, 60, 65, 65, 65],
+[0, 70, 70, 50, 50, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 65, 65, 70, 70, 65],
+[0, 75, 70, 60, 50, 55, 55, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 50, 65, 75, 75, 70, 65],
+[75, 75, 80, 80, 70, 60, 55, 60, 60, 60, 60, 60, 45, 50, 55, 50, 45, 45, 65, 70, 70, 70, 70],
+[75, 90, 90, 90, 90, 90, 85, 70, 75, 80, 80, 85, 90, 70, 75, 65, 70, 70, 75, 75, 70, 70, 70],
+[80, 90, 90, 90, 90, 90, 90, 85, 85, 85, 90, 90, 90, 85, 85, 90, 90, 90, 90, 85, 85, 70, 70],
+[80, 80, 80, 80, 85, 90, 90, 85, 85, 85, 85, 85, 85, 85, 85, 90, 90, 90, 90, 90, 85, 70, 70],
+[80, 80, 80, 75, 75, 70, 85, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 65, 65, 60, 65, 65, 0],
+]
+
+Feasible Interaction Direction: ["top"]
+
+Caption: sit on the couch.
+
+### Analysis: 
+1. Interaction Joint: Since the motion is "sit on the couch", the interaction joint is "pelvis". 
+2. Interaction Direction: The provided feasible interaction direction is ["top"]. THe height map of the target couch is mainly concentrated around 40 or 80, so the interaction direction is from 80 to 40 (i.e., "top"). Comprehensive analysis shows that the interaction direction should be "top".
+3. Interaction Grids: 
+    Since the motion is "sit on the couch", the interaction surface is "top". 
+    Since the height map of the couch and the motion of sitting, the grid [1,11] in the height of 45 and nearby grids are suitable interaction grids. This is because the grids at heights of 45 appear multiple times, are connected to each other, have a smooth height change, and can be directly connected to the boundaries of the target. 
+    Importantly, the grids at heights near 90 also meet these requirements, but they are with the highest height. So we not choose the grids at the height near 90.
+
+### Result:
+```json
+{
+"interaction_joint":"pelvis",
+"interaction_grid":[1,11],
+"interaction_direction":"top",
+}
+```
+
+
+Example 2:
+Height Map of Target:
+[
+[50, 50, 50, 45, 45, 45, 45, 45, 40, 40, 40, 40, 40, 40, 50, 50, 50, 40, 40, 50, 50, 50, 50],
+[50, 50, 50, 50, 50, 50, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 55, 50, 50, 50, 50],
+[50, 50, 50, 50, 50, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 50, 50, 50, 50, 55],
+[50, 55, 50, 50, 50, 55, 55, 50, 45, 45, 45, 45, 45, 45, 45, 45, 45, 50, 55, 55, 55, 50, 55],
+[55, 55, 50, 50, 50, 50, 55, 50, 50, 50, 50, 50, 45, 50, 55, 50, 45, 45, 55, 50, 50, 50, 50],
+[55, 50, 50, 50, 50, 50, 45, 50, 55, 50, 50, 55, 50, 50, 55, 55, 50, 50, 55, 55, 50, 50, 50],
+[50, 50, 50, 50, 50, 50, 50, 55, 55, 55, 50, 50, 50, 55, 55, 50, 50, 50, 50, 55, 55, 50, 50],
+[50, 50, 50, 50, 55, 50, 50, 55, 55, 55, 55, 55, 55, 55, 55, 50, 50, 50, 50, 50, 55, 50, 50],
+[50, 50, 50, 55, 55, 50, 55, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 55, 55, 50, 55, 55, 50],
+]
+
+Feasible Interaction Direction: ["bottom", "bottom-right"]
+
+Caption: lie on the bed.
+
+### Analysis: 
+1. Interaction Joint: Since the motion is "lie on the bed", the interaction joint is "pelvis". 
+2. Interaction Direction: The provided feasible interaction direction is ["bottom", "bottom-right"]. The height map of the bed is mainly concentrated around 50, so the interaction direction can be the long side of the target (e.g., "bottom" and "top"). Comprehensive analysis shows that the interaction direction should be "top".
+3. Interaction Grids: 
+    Since the motion is "lie on the bed", the interaction surface is "top". 
+    Since the height map of the bed and the motion of lying, the grid [7,12] in the height of 55 and nearby grids are suitable interaction grids. This is because the grids are at the boundaries of the target. 
+
+### Result:
+```json
+{
+"interaction_joint":"pelvis",
+"interaction_grid":[8,12],
+"interaction_direction":"bottom",
+}
+```

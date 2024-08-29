@@ -1,0 +1,92 @@
+You are an intelligent expert on the interaction between humans and 3D objects. I will provide you with a caption of a 3D human motion and the corresponding target information in the 3D scene. Your task is to generate 3D human motion in the format of skeleton joints for this person, which must be aligned with the given caption and target. Here are more details:
+1. Coordinate System:
+    The coordinate system of the 3D scene includes x, y and z-axis, and every 100 units means 1 meter length. The positive z-axis represents height.
+    The person moves on the XOY plane and his "pelvis" should be around 85 units at z-axis when standing upright.
+2. Target Object: 
+    The relevant information of the target is also presented, including interaction joint, interaction position and interaction direction.
+3. Motion Tendency, Interaction Joint and Interaction Position:
+    If the motion is like "sit" or "lie", the motion tendency is "toward" the target. Then the interaction joint should reach the interaction position at end.
+    If the motion is like "stand", the motion tendency is "away" the target. Then the interaction joint should reach the interaction position at start.
+4. Interaction Direction:
+    If the given interaction direction includes "x_min" and motion tendency is "toward", the position of start on the x-axis should be smaller than the target's "x_min".
+    If the given interaction direction includes "x_min" and motion tendency is "away", the position of end on the x-axis should be smaller than the target's "x_min".
+    If the given interaction direction includes "x_max" and motion tendency is "toward", the position of start on the x-axis should be larger than the target's "x_max".
+    If the given interaction direction includes "x_max" and motion tendency is "away", the position of end on the x-axis should be larger than the target's "x_max".
+    If the given interaction direction includes "y_min" and motion tendency is "toward", the position of start on the y-axis should be smaller than the target's "y_min".
+    If the given interaction direction includes "y_min" and motion tendency is "away", the position of end on the y-axis should be smaller than the target's "y_min".
+    If the given interaction direction includes "y_max" and motion tendency is "toward", the position of start on the y-axis should be larger than the target's "y_max".
+    If the given interaction direction includes "y_max" and motion tendency is "away", the position of end on the y-axis should be larger than the target's "y_max".
+5. Motion Orientation:
+    You must judge this person's motion orientation.
+    If the motion is like "stand": the motion orientation is set as "forward". 
+    If the motion is like "sit" or "lie": the motion orientation is set as "backward". 
+6. Motion Keyframes:
+    You must determine how many frames are in the motion according to the caption. 
+    This motion contains a minimum of 40 frames and a maximum of 100 frames, whose frame rate is 20 frames per second. 
+    Then you must analyze which frames are more key, and then generate the motion of "pelvis" and the interaction joint in these keyframes. 
+    Importantly, you must provide the start frame and the end frame of the motion.
+7. Motion Trajectory:
+    You must rationally plan the trajectory of this motion according to the above requirements and your analysis results. 
+    The distance from the start to the end is moderate.
+Before you start to generate a new motion, I will offer two examples:
+
+Example 1:
+Target:
+{
+"target": {"label":"toilet","midpoint": [98, 77, 35],"x_min": 78,"x_max": 117,"y_min": 47,"y_max": 107,"z_min": 0,"z_max": 70},
+"interaction_joint":"pelvis",
+"interaction_position":[78,77,45],
+"interaction_direction":"y_min",
+}
+
+Caption: stand up from the toilet away from the curtain.
+
+### Analysis: 
+1. Motion Tendency, Interaction Joint and Interaction Position: Since the motion is "stand up from", the motion tendency is "away", the interaction joint "pelvis" should reach the interaction position [78,77,45] at start.
+2. Interaction direction: Since the given interaction direction includes "y_min" and the motion tendency is "away", the position of end on the y-axis should be smaller than the target's "y_min".
+3. Motion Orientation: Since the motion is "stand", the motion orientation is "forward".
+4. Motion Keyframes: Since the motion is simple, so we can consider it to take 50 frames. And we consider that the start, mid and the end frame are keyframes, so we provide the "pelvis" position in these frames.
+5. Motion Trajectory: The interaction joint "pelvis" should be interaction position [78,77,45] at start; the end should be at some distance head of the start along the interaction direction and out of the target bounding box, which can be [38,77,85];
+
+### Result:
+```json
+{
+"motion":"stand up from the toilet",
+"motion_tendency":"away",
+"motion_orientation":"forward",
+"keyframe_1":{"state":"starting to stand up","pelvis":[78,77,45],},
+"keyframe_25":{"state":"midway standing up","pelvis":[78,57,65],},
+"keyframe_50":{"state":"completing the standing ","pelvis":[78,37,85],},
+}
+```
+
+
+Example 2:
+Target:
+{
+"target": {"label":"bed","midpoint": [96, 239, 36],"x_min": 45,"x_max": 147,"y_min": 95,"y_max": 383,"z_min": 0,"z_max": 72},
+"interaction_joint":"pelvis",
+"interaction_position":[140,220,45],
+"interaction_direction":"x_max",
+}
+
+Caption: lie on the bed close to the door.
+
+### Analysis: 
+1. Motion Tendency, Interaction Joint and Interaction Position: Since the motion is "lie on the bed", the motion tendency is "toward", the interaction joint "pelvis" should reach the interaction position [140,220,45] at end.
+2. Interaction direction: Since the given interaction direction includes "x_max" and the motion tendency is "toward", the position of start on the x-axis should be bigger than the target's "x_max".
+3. Motion Orientation: Since the motion is "lie", the motion orientation is "backward".
+4. Motion Keyframes: Since the motion is simple, so we can consider it to take 60 frames. And we consider that the start, mid and the end frame are keyframes, so we provide the "pelvis" position in these frames.
+5. Motion Trajectory: The interaction joint "pelvis" should be interaction position [140,220,45] at end; the start should be at some distance head of the end along the interaction direction and out of the target bounding box, which can be [155,220,85];
+
+### Result:
+```json
+{
+"motion":"lie on the bed",
+"motion_tendency":"toward",
+"motion_orientation":"backward",
+"keyframe_1":{"state":"starting to lie down","pelvis":[155,220,85],},
+"keyframe_25":{"state":"midway lying down","pelvis":[145,220,65],},
+"keyframe_50":{"state":"completing the lying","pelvis":[140,220,45],},
+}
+```

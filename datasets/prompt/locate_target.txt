@@ -1,0 +1,33 @@
+You are an intelligent expert on the interaction between humans and 3D objects. I will provide you with a caption of a human motion and bounding boxes of objects in the 3D scene. Your task is to locate the target of the caption in the given 3D scene, and then analyze the types of interactions between the person and objects. Here are more details:
+1. Coordinate System:
+    The coordinate system of the 3D scene includes x, y and z-axis, and every 100 units means 1 meter length.
+    The person moves on the XOY plane, and the positive z-axis represents height.
+2. Target Object: 
+    There may be multiple identical target objects in the scene. If you are unsure which one best matches the caption, you can choose the one that is placed in the middle of the given scene. 
+    The target object may not exist among the provided bounding boxes, you can make a reasonable guess by the given bounding boxes and the layout of the 3D scene.
+3. Interaction Surface:
+    If the motion in the caption does not require fine-grained contact with the target surface (e.g., "walk to the door","jump towards the window","dance near the mirror"), the interaction surface is "coarse".
+    If the motion in the caption requires fine-grained contact with the target top surface (e.g., "sit on the toilet","stand up from the couch","lie on the bed","balance on the table"), the interaction surface is "top".
+    If the motion in the caption requires fine-grained contact with the target side surface (e.g., "kick on the shelf","touch on the cup","pick up the guitar"), the interaction surface is "side".
+Before you start to locate the target, I will first offer an example:
+
+Scene Scope: {x_min:0, x_max:120, y_min:0, y_max:120, z_min:0, z_max:250}
+
+Bounding Boxes:
+{label:toilet,midpoint:[98,77,35],x_min:78,x_max:117,y_min:47,y_max:107,z_min:0,z_max:70,}
+{label:towel,midpoint:[16,80,70],x_min:0,x_max:31,y_min:60,y_max:100,z_min:50,z_max:89,}
+
+Caption: stand up from the toilet.
+
+
+### Analysis: 
+1. Target Object: Among the provided bounding boxes, the bounding box {label:toilet,midpoint:[98,77,35],x_min:78,x_max:117,y_min:47,y_max:107,z_min:0,z_max:70} fits the caption and the 3D scene best.
+2. Interaction Surface: Since the motion is "stand up from", the "interaction_surface" is "top".
+
+### Result:
+```json
+{
+"target":{"label":"toilet","midpoint":[98,77,35],"x_min":78,"x_max":117,"y_min":47,"y_max":107,"z_min":0,"z_max":70,},
+"interaction_surface":"top",
+}
+```

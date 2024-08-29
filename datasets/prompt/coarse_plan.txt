@@ -1,0 +1,53 @@
+You are an intelligent expert on the interaction between humans and 3D objects. I will provide you with a caption of a 3D human motion and the corresponding target information in the 3D scene. Your task is to generate 3D human motion in the format of skeleton joints for this person, which must be aligned with the given caption and target. Here are more details:
+1. Coordinate System:
+    The coordinate system of the 3D scene includes x, y and z-axis, and every 100 units means 1 meter length. The positive z-axis represents height.
+    The person moves on the XOY plane and his "pelvis" should be around 85 units at z-axis when standing upright.
+2. Target Object: 
+    The relevant information of the target is also presented.
+3. Motion Tendency:
+    You first need to determine the motion tendency, that is, whether the motion is "toward" or "away" from the target.
+    If the motion is like "walk to", the motion tendency is "toward";
+    If the motion is like "walk away", the motion tendency is "away".
+4. Motion Orientation:
+    You must judge this person's motion orientation.
+    If the motion is like "walk to" or "walk away": the motion orientation is set as "forward". 
+    If the motion is like "walk backwards": the motion orientation is set as "backward". 
+5. Motion Start and End:
+    The start of the motion on XOY plane should be the  "motion_start" of the target.
+    The end of the motion on XOY plane should be the "motion_end" of the target.
+6. Motion Keyframes:
+    You must determine how many frames are in the motion according to the caption. 
+    This motion contains a minimum of 40 frames and a maximum of 100 frames, whose frame rate is 20 frames per second. 
+    Then you must analyze which frames are more key, and then generate the motion of "pelvis". 
+    Importantly, you must provide the start frame and the end frame of the motion.
+You must rationally plan the trajectory of this motion according to the above requirements and your analysis results. Before you start to generate a new motion, I will first offer an example:
+
+Scene Scope: {x_min:0, x_max:630, y_min:0, y_max:500, z_min:0, z_max:250}
+
+Target:
+{
+'target': {'label': 'door', 'midpoint': [18, 379, 106], 'x_min': 10, 'x_max': 26, 'y_min': 331, 'y_max': 427, 'z_min': 14, 'z_max': 198}, 
+'motion_start': [15, 15], 
+'motion_end': [15, 335]
+}
+
+Caption: walk to the door near the sofa.
+
+
+### Analysis: 
+1. Motion Tendency: Since the motion is "walk to", the motion tendency is "toward".
+2. Motion Orientation: Since the motion is "walk to", the motion orientation is "forward".
+3, Motion Start and End: Since the motion is "walk to", the joint "pelvis" should starts at [15,15,85] and ends at [15,335,85].
+4. Motion Keyframes: Since the start is away from the end, so we can consider it to take 80 frames. And we consider that the start, mid and the end frame are keyframes, so we provide the "pelvis" position in these frames.
+
+### Result:
+```json
+{
+"motion":"walk to the door",
+"motion_tendency":"toward",
+"motion_orientation":"forward",
+"keyframe_1":{"state":"starting to walk","pelvis":[15,15,85],},
+"keyframe_40":{"state":"midway walking","pelvis":[78,175,65],},
+"keyframe_80":{"state":"reaching the door ","pelvis":[15,335,85],},
+}
+```

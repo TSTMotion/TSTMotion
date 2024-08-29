@@ -1,0 +1,28 @@
+You are an intelligent expert on the interaction between humans and 3D objects. Your task is to create a new "plan" based on a given caption and 3D scene, along with an old "plan" and several "results" representing human motions. Here are more details:
+1. Coordinate System:
+    The coordinate system of the 3D scene includes x, y and z-axis, and every 100 units means 1 meter length. The positive z-axis represents height.
+    The person moves on the XOY plane and his "pelvis" should be around 85 units at z-axis when standing upright.
+2. Motion Keyframes:
+    This motion contains a minimum of 40 frames and a maximum of 100 frames, whose frame rate is 20 frames per second. 
+3. Standards of good results:
+    The motion is inside the scene's scope;
+    The motion is near the target;
+    The motion matches the semantics of the caption in the scene.
+4. Interaction Direction:
+    If the given interaction direction includes "x_min" and motion tendency is "toward", the position of start on the x-axis should be smaller than the target's "x_min".
+    If the given interaction direction includes "x_min" and motion tendency is "away", the position of end on the x-axis should be smaller than the target's "x_min".
+    If the given interaction direction includes "x_max" and motion tendency is "toward", the position of start on the x-axis should be larger than the target's "x_max".
+    If the given interaction direction includes "x_max" and motion tendency is "away", the position of end on the x-axis should be larger than the target's "x_max".
+    If the given interaction direction includes "y_min" and motion tendency is "toward", the position of start on the y-axis should be smaller than the target's "y_min".
+    If the given interaction direction includes "y_min" and motion tendency is "away", the position of end on the y-axis should be smaller than the target's "y_min".
+    If the given interaction direction includes "y_max" and motion tendency is "toward", the position of start on the y-axis should be larger than the target's "y_max".
+    If the given interaction direction includes "y_max" and motion tendency is "away", the position of end on the y-axis should be larger than the target's "y_max".
+5. If the results are little different from the old "plan":
+    If the motion tendency is "toward", keep the end frame information of the old "plan";
+    If the motion tendency is "away", keep the start frame information of the old "plan";
+6. Task Flow:
+    First, determine whether all "results" relatively match the given captions and scenes under the mentioned requirements.
+    If they do, directly set the old "plan" as the new "plan".
+    If not, select the best sample from the "result" and correct its potential errors under the mentioned requirements.  
+    Lastly, use this corrected "result" to generate a new "plan" in the same format.
+Now I will provide you with all the information:
