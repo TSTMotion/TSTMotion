@@ -73,7 +73,7 @@ unzip omnicontrol_ckpt.zip -d .
 You can download the [SMPLX](https://smpl-x.is.tue.mpg.de/) for visualization, including SMPLX_NEUTRAL.npz and SMPLX_NEUTRAL.pkl.
 
 ### 6. Download Prepared Segmentation Results:
-You can download the prepared segmentation results in folder demo_scene from [Google Drive](https://drive.google.com/drive/folders/1RDj9DfxEBIdqXG3ChNJdR08kCvmNi0F3?usp=drive_link).
+You can download the prepared segmentation results in folder demo_scene from [Google Drive]([https://drive.google.com/drive/folders/1RDj9DfxEBIdqXG3ChNJdR08kCvmNi0F3?usp=drive_link](https://drive.google.com/file/d/18swtyToST19yO7J0thWE8zI_7Zz6R-oZ/view?usp=drive_link)).
 Notably, the pointcloud of scene0604_00_vh_clean.ply must download from [ScanNet](http://www.scan-net.org/).
 
 ## Motion Generation
