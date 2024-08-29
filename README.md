@@ -19,6 +19,9 @@ This repository is an official implementation of [TSTMotion](https://TSTMotion.g
 ```
 ├── datasets
 │   ├── demo_scene
+│   │   ├── ScanNet0604
+│   │   │   ├── detection_results.pkl
+│   │   │   ├── scene0604_00_vh_clean.ply
 │   ├── HumanML3D
 │   │   ├── new_joint_vecs
 │   │   ├── new_joints
