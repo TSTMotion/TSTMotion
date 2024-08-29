@@ -1,5 +1,5 @@
 source activate
-conda activate mdm
+conda activate tstmotion
 
 cd ..
 python demo.py \
