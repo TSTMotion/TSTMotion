@@ -50,7 +50,7 @@ pip install git+https://github.com/openai/CLIP.git
 ```
 
 ### 2. Download Dependencies:
-The results should be placed as shown in Folder Structure, including glove,t2m and smplx.
+The results should be placed in OmniControl folder as shown in Folder Structure, including glove,t2m and smplx.
 ```
 cd OmniControl
 bash prepare/download_smpl_files.sh
@@ -58,7 +58,7 @@ bash prepare/download_glove.sh
 bash prepare/download_t2m_evaluators.sh
 ```
 
-### 3. Download Dataset:
+### 3. Download HumanML3D Dataset:
 Follow the instructions in [HumanML3D](https://github.com/EricGuo5513/HumanML3D), then copy the results as shown in Folder Structure.
 
 ### 4. Download Checkpoint:
@@ -68,6 +68,13 @@ cd /OmniControl/save
 gdown --id 1oTkBtArc3xjqkYD6Id7LksrTOn3e1Zud
 unzip omnicontrol_ckpt.zip -d .
 ```
+
+### 5. Download SMPLX:
+You can download the [SMPLX](https://smpl-x.is.tue.mpg.de/) for visualization, including SMPLX_NEUTRAL.npz and SMPLX_NEUTRAL.pkl.
+
+### 6. Download Prepared Segmentation Results:
+You can download the prepared segmentation results in folder demo_scene from [Google Drive]().
+Notably, the pointcloud of scene0604_00_vh_clean.ply must download from [ScanNet](http://www.scan-net.org/).
 
 
 ## Acknowledgements
