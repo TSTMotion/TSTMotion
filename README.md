@@ -12,7 +12,7 @@
     </a>
 </p>
 
-This repository is an official implementation of [TSTMotion](https://TSTMotion.github.io/TSTMotion.github.io/). The code is being cleaned and will be released soon.
+This repository is an official implementation of [TSTMotion](https://TSTMotion.github.io/TSTMotion.github.io/) <b>BASELINE</b>. The <b>COMPLETE CODE</b> is being cleaned and will be released soon.
 
 
 ## Folder Structure
