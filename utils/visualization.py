@@ -154,6 +154,9 @@ def render_motion_in_scene(
     output = body_model(return_verts=True, **torch_param)
     faces = body_model.faces
     vertices = output.vertices.detach().cpu().numpy()
+    min_ver = np.min(vertices[:,[5770,5780,8846,8463,8474,8635],2])
+    if min_ver < 0:
+        vertices[:,:,2] -= min_ver
     pelvis_xy = vertices[:, 0, 0:2]
     
 
